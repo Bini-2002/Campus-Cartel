@@ -1,0 +1,31 @@
+.dashboard-header {
+  background-color: #374151;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dashboard-header-actions .btn-primary,
+.dashboard-header-actions .btn-secondary {
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+}

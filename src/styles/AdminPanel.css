@@ -1,0 +1,55 @@
+.admin-panel-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.admin-panel-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-color);
+}
+
+.users-table-container {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow-x: auto; /* For responsiveness on small screens */
+  padding: 1rem;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse; /* Cleaner borders */
+}
+
+.users-table th,
+.users-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.users-table thead th {
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+  font-weight: 600;
+  position: sticky; /* For sticky header if table scrolls */
+  top: 0;
+  z-index: 1;
+}
+
+.users-table tbody tr:nth-child(even) {
+  background-color: #F9FAFB; /* Gray-50, for zebra striping */
+}
+
+.users-table tbody tr:hover {
+  background-color: #EFF6FF; /* Blue-50, for hover effect */
+}
+
+.users-table .btn-delete {
+  padding: 0.4rem 0.8rem; /* Smaller button for table actions */
+  font-size: 0.875rem;
+}

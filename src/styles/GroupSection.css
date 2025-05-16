@@ -1,0 +1,135 @@
+.group-section-container {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.group-section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color, #2563eb);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.group-form-container {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background-color: #f9fafb;
+}
+
+.group-form-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.group-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.group-form .input-field {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.group-form .input-field:focus {
+  outline: none;
+  border-color: var(--primary-color, #2563eb);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.group-form .btn-primary {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.1rem;
+}
+
+.group-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.group-card {
+  background-color: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.group-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.group-card h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.group-card p {
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.group-card .btn-secondary,
+.group-card .btn-danger {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+.edit-group-form-container {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background-color: #f9fafb;
+}
+
+.edit-group-form-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.edit-group-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.edit-group-form .input-field {
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.edit-group-form .input-field:focus {
+  outline: none;
+  border-color: var(--primary-color, #2563eb);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.edit-group-form .btn-primary,
+.edit-group-form .btn-secondary {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.1rem;
+}

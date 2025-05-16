@@ -1,0 +1,22 @@
+.home-page-container {
+  max-width: 700px;
+  margin: 2.5rem auto;
+  padding: 1.5rem;
+  background: var(--surface-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.no-posts-message {
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: 1.1rem;
+  padding: 2rem;
+  background: var(--primary-color-light);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+}

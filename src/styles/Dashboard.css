@@ -1,0 +1,40 @@
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh; /* Changed from height to min-height for content overflow */
+  background-color: var(--background-color); /* Use theme background */
+}
+
+.dashboard-sidebar {
+  /* Sidebar styles will be in Sidebar.css or its own component's CSS */
+  /* For now, just a placeholder width */
+  width: 260px; 
+  background-color: var(--surface-color); /* Example */
+  box-shadow: var(--shadow-md);
+  /* Add flex-shrink: 0; if it shouldn't shrink */
+}
+
+.dashboard-main-content {
+  flex-grow: 1; /* Takes remaining space */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Allows content to scroll if it overflows */
+}
+
+.dashboard-header {
+  /* Header styles will be in Header.css or its own component's CSS */
+  /* For now, just a placeholder height */
+  height: 64px; 
+  background-color: var(--surface-color); /* Example */
+  box-shadow: var(--shadow-sm);
+  /* Add display: flex; align-items: center; padding: 0 1rem; if needed */
+}
+
+.dashboard-section-content {
+  flex-grow: 1;
+  padding: 1.5rem; /* Standard padding */
+  margin: 1rem; /* Margin around the content area */
+  background-color: var(--surface-color); /* White background for content */
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow-y: auto; /* Scroll within this section if content is too long */
+}

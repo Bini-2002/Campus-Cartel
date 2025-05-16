@@ -1,0 +1,42 @@
+.dashboard-sidebar {
+  width: 240px;
+  background-color: #374151;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #4a5568;
+  text-align: center;
+}
+
+.dashboard-sidebar-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.dashboard-sidebar-nav {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-sidebar-nav button {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  background-color: transparent;
+  color: #ddd;
+  border: none;
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.dashboard-sidebar-nav button:hover,
+.dashboard-sidebar-nav button.active {
+  background-color: #4a5568;
+  color: #fff;
+}

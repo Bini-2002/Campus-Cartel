@@ -1,0 +1,77 @@
+:root {
+  --primary-color: #0a66c2;
+  --primary-color-dark: #004182;
+  --primary-color-light: #eaf3fc;
+  --secondary-color: #666666;
+  --accent-color: #f3f6f8;
+  --background-color: #f3f6f8;
+  --surface-color: #fff;
+  --text-color: #1d2226;
+  --text-color-light: #666666;
+  --border-color: #e0e0e0;
+  --error-color: #d93025;
+  --success-color: #0a66c2;
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+  --border-radius-md: 8px;
+  --border-radius-lg: 16px;
+  --font-family-sans: 'Segoe UI', Arial, sans-serif;
+}
+body {
+  background: var(--background-color);
+  font-family: var(--font-family-sans);
+  color: var(--text-color);
+}
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-primary:hover {
+  background: var(--primary-color-dark);
+}
+.btn-secondary {
+  background: var(--accent-color);
+  color: var(--primary-color-dark);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-secondary:hover {
+  background: #e0e7ef;
+}
+.btn-danger {
+  background: var(--error-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-danger:hover {
+  background: #b91c1c;
+}
+.card {
+  background: #fff;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 1.2rem;
+}

@@ -1,0 +1,41 @@
+.post-card-container {
+  background-color: var(--surface-color, #fff);
+  box-shadow: var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.08));
+  border-radius: var(--border-radius-lg, 1rem);
+  padding: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card-container:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg, 0 4px 12px rgba(0, 0, 0, 0.12));
+}
+
+.post-content {
+  color: var(--text-color, #1f2937);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-color-light, #4b5563);
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.post-action-button:hover {
+  color: var(--primary-color, #2563eb);
+}
+
+.post-action-button.liked {
+  color: var(--error-color, #ef4444);
+}

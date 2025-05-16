@@ -1,0 +1,105 @@
+.groups-page-container {
+  max-width: 900px;
+  margin: 2.5rem auto;
+  padding: 2rem 1.5rem;
+  background: var(--surface-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+.groups-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color-dark);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.group-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.group-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.group-card:hover {
+  box-shadow: 0 8px 32px rgba(10,102,194,0.13);
+  transform: translateY(-2px) scale(1.01);
+}
+.group-info h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--primary-color-dark);
+  margin-bottom: 0.3rem;
+}
+.group-info p {
+  color: var(--text-color-light);
+  font-size: 0.98rem;
+  margin-bottom: 0.7rem;
+}
+.group-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.btn-join, .btn-chat, .btn-delete {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-join {
+  background: var(--primary-color);
+  color: #fff;
+}
+.btn-join:hover {
+  background: var(--primary-color-dark);
+}
+.btn-chat {
+  background: var(--accent-color);
+  color: var(--primary-color-dark);
+}
+.btn-chat:hover {
+  background: #e0e7ef;
+}
+.btn-delete {
+  background: var(--error-color);
+  color: #fff;
+}
+.btn-delete:hover {
+  background: #b91c1c;
+}
+.chat-view-container {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--primary-color-light);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+}
+.back-to-groups-btn {
+  background: var(--secondary-color);
+  color: #fff;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 1.2rem;
+}
+.back-to-groups-btn:hover {
+  background: #444;
+}
+@media (max-width: 700px) {
+  .group-list {
+    grid-template-columns: 1fr;
+  }
+}

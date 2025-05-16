@@ -1,0 +1,112 @@
+.chat-component-container {
+  display: flex;
+  flex-direction: column;
+  height: 70vh; /* Adjust as needed, or make it take full height of its parent */
+  max-height: 500px; /* Example max height */
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden; /* Important for containing scrolling content */
+}
+
+.chat-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--primary-color-light);
+}
+
+.chat-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+.chat-messages-area {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto; /* Enables scrolling for messages */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Space between messages */
+  background-color: #F9FAFB; /* Slightly off-white for message area */
+}
+
+.chat-message {
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-md);
+  max-width: 75%;
+  word-wrap: break-word; /* Ensure long words break */
+  box-shadow: var(--shadow-sm);
+}
+
+.chat-message-other {
+  background-color: #E5E7EB; /* Gray-200 */
+  color: var(--text-color);
+  align-self: flex-start; /* Messages from others align left */
+  border-bottom-left-radius: 0; /* "Tail" effect */
+}
+
+.chat-message-me {
+  background-color: var(--primary-color);
+  color: var(--surface-color);
+  align-self: flex-end; /* Your messages align right */
+  border-bottom-right-radius: 0; /* "Tail" effect */
+}
+
+.message-sender {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  color: var(--primary-color-dark); /* Darker for sender name in other messages */
+}
+
+.chat-message-me .message-sender {
+  color: rgba(255, 255, 255, 0.85); /* Lighter sender name for your messages */
+}
+
+
+.message-content {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.message-timestamp {
+  font-size: 0.75rem;
+  color: var(--text-color-light);
+  margin-top: 0.3rem;
+  text-align: right;
+}
+
+.chat-message-me .message-timestamp {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.chat-input-area {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  gap: 0.75rem; /* Space between input and button */
+}
+
+.chat-text-input {
+  flex-grow: 1;
+  /* Inherits styles from theme.css, can add specifics */
+  padding: 0.65rem 0.9rem; /* Slightly smaller padding for chat input */
+}
+
+.chat-send-button {
+  /* Inherits .btn-primary from theme.css */
+  padding: 0.65rem 1.25rem; /* Consistent with other buttons */
+  flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+.chat-info-message {
+  padding: 1rem;
+  text-align: center;
+  color: var(--text-color-light);
+  font-style: italic;
+}

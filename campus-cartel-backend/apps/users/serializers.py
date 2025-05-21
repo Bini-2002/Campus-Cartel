@@ -5,16 +5,28 @@ from django.contrib.auth import get_user_model  # Use get_user_model to referenc
 User = get_user_model()
 
 
+from rest_framework import serializers
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'firstname', 'lastname', 'avatar', 'bio', 'university', 'major', 'year', 'user_type']
-
-    def validate_email(self, value):
-        user_type = self.initial_data.get('user_type')
-        if user_type == 'student' and not value.endswith('.edu.et'):
-            raise serializers.ValidationError("Students must register with a university email ending in '.edu.et'.")
-        return value
+        fields = [
+            'id', 'username', 'email', 'firstname', 'lastname', 'avatar', 'bio',
+            'university', 'major', 'year', 'user_type'
+        ]
+        extra_kwargs = {
+            'firstname': {'required': False, 'allow_null': True, 'allow_blank': True},
+            'lastname': {'required': False, 'allow_null': True, 'allow_blank': True},
+            'bio': {'required': False, 'allow_null': True, 'allow_blank': True},
+            'university': {'required': False, 'allow_null': True, 'allow_blank': True},
+            'major': {'required': False, 'allow_null': True, 'allow_blank': True},
+            'year': {'required': False, 'allow_null': True, 'allow_blank': True},
+            'avatar': {'required': False, 'allow_null': True},  # No allow_blank for ImageField
+            'email': {'required': True, 'allow_null': False},   # No allow_blank for EmailField
+        }
     
 
 class RegisterSerializer(serializers.ModelSerializer):

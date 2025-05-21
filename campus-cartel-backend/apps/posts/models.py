@@ -8,6 +8,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name='liked_posts', blank=True)
     shares = models.ManyToManyField(User, related_name='shared_posts', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.author.username}: {self.content[:30]}"
@@ -25,6 +26,8 @@ class Comment(models.Model):
     content = models.TextField()
     likes = models.ManyToManyField(User, related_name='liked_comments', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes_count = models.IntegerField(default=0)
+
 
     def __str__(self):
         return f"{self.author.username}: {self.content[:30]}"

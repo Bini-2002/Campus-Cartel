@@ -46,23 +46,31 @@ const Home: React.FC = () => {
         <p className="no-posts-message">No posts yet. Be the first to share something!</p>
       )}
       <div className="posts-list">
-        {posts.map((post) => (
-          <motion.div
-            key={post.id}
-            className="post-card-wrapper"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: post.id * 0.05 }}
-          >
-            <PostCard
-              post={post}
-              onLike={() => dispatch(toggleLike({ postId: post.id, like: true }))}
-              onUnlike={() => dispatch(toggleLike({ postId: post.id, like: false }))}
-              onComment={() => {/* Implement comment handler here */}}
-              onDelete={() => dispatch(deletePost(post.id))}
-            />
-          </motion.div>
-        ))}
+        {posts.map((post) => {
+          // Ensure author is an object with username property
+          const normalizedPost = {
+        ...post,
+        author: typeof post.author === 'object' && post.author !== null
+        ? post.author
+        : { username: 'Unknown' },
+        created_at: post.created_at ?? '', // fallback to empty string if undefined
+};
+          return (
+            <motion.div
+              key={post.id}
+              className="post-card-wrapper"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: post.id * 0.05 }}
+            >
+              <PostCard
+                post={normalizedPost}
+                liked={post.liked}
+                onLike={() => dispatch(toggleLike({ postId: post.id, like: true }))}
+              />
+            </motion.div>
+          );
+        })}
       </div>
     </motion.div>
   );

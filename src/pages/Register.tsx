@@ -1,35 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import API_BASE_URL from '../apiConfigure';
+import { useAuth } from '../context/AuthContext';
 import '../styles/Auth.css';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    firstname: '',
-    lastname: '',
-    user_type: 'student',
-  });
+  const { register } = useAuth();
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    if (formData.user_type === 'student' && !formData.email.endsWith('.edu.et')) {
-      setError("Students must register with a university email ending in '.edu.et'.");
-      return;
-    }
+    setLoading(true);
 
     try {
-      await axios.post(`${API_BASE_URL}/users/register/`, formData);
+      await register(formData.username, formData.email, formData.password);
       navigate('/login');
     } catch (error: any) {
-      setError('Registration failed. Please try again.');
+      setError(error.message || 'Registration failed.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,22 +36,6 @@ const Register = () => {
             placeholder="Username"
             value={formData.username}
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-            className="input-field"
-            required
-          />
-          <input
-            type="text"
-            placeholder="First Name"
-            value={formData.firstname}
-            onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
-            className="input-field"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            value={formData.lastname}
-            onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
             className="input-field"
             required
           />
@@ -79,17 +55,12 @@ const Register = () => {
             className="input-field"
             required
           />
-          <select
-            value={formData.user_type}
-            onChange={(e) => setFormData({ ...formData, user_type: e.target.value })}
-            className="input-field"
-            required
+          <button
+            type="submit"
+            className="btn-primary"
+            disabled={loading}
           >
-            <option value="student">Student</option>
-            <option value="organization">Organization</option>
-          </select>
-          <button type="submit" className="btn-primary" style={{ width: '100%' }}>
-            Register
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
         <div className="auth-link-row">

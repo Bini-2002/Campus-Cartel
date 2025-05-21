@@ -37,24 +37,35 @@ const CreatePostPage: React.FC = () => {
       setError('Post content or image is required.');
       return;
     }
+    if (!token) {
+      setError('You are not authenticated. Please log in again.');
+      setIsSubmitting(false);
+      return;
+    }
     setIsSubmitting(true);
     try {
       const formData = new FormData();
       formData.append('content', content);
       if (image) formData.append('image', image);
 
-      // Debug: log the token
-      console.log('Token being sent:', token);
-
+      // Always send the token in the Authorization header
       await axios.post(`${API_BASE_URL}/posts/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          ...(token ? { Authorization: `Bearer ${token}` } : {})
+          Authorization: `Bearer ${token}`,
         }
       });
       navigate('/dashboard');
     } catch (err: any) {
-      setError('Failed to create post. Please try again.');
+      if (err.response && err.response.data) {
+        setError(
+          typeof err.response.data === 'string'
+            ? err.response.data
+            : JSON.stringify(err.response.data)
+        );
+      } else {
+        setError('Failed to create post. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }

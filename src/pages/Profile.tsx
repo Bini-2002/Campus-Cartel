@@ -108,16 +108,14 @@ const Profile = () => {
         <h2>My Posts</h2>
         <div className="posts-list">
           {posts.length === 0 && <div className="no-posts-message">No posts yet.</div>}
-          {posts.map((post) => (
+            {posts.map((post) => (
             <PostCard
               key={post.id}
               post={post}
-              onDelete={() => handleDeletePost(post.id)}
-              onLike={() => {/* Like logic */}}
-              onUnlike={() => {/* Unlike logic */}}
-              onComment={() => {/* Comment logic */}}
+              onLike={() => {}} // Provide a no-op or actual handler as needed
+              liked={false}    // Set to true/false or derive from post/user state
             />
-          ))}
+            ))}
         </div>
       </div>
     </div>

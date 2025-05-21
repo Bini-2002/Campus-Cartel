@@ -2,15 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../apiConfigure';
 
-interface TokenResponse {
-  access: string;
-  refresh: string;
-}
-
 interface User {
   id: string;
-  username: string;
   email: string;
+  username: string;
   avatar: string;
   user_type: string;
   is_superuser: boolean;
@@ -19,7 +14,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   register: (username: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
@@ -43,45 +38,43 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post<TokenResponse>(`${API_BASE_URL}/token/`, {
-        username,
+      // 1. Get JWT token
+      const response = await axios.post<{ access: string; refresh: string }>(`${API_BASE_URL}/token/`, {
+        email,
         password,
       });
       const { access, refresh } = response.data;
-
-      const userResponse = await axios.get<User[]>(`${API_BASE_URL}/users/`, {
-        headers: { Authorization: `Bearer ${access}` },
-      });
-
-      const loggedInUser = userResponse.data.find((u) => u.username === username);
-
-      if (loggedInUser) {
-        setUser(loggedInUser);
-        setToken(access);
-      } else {
-        throw new Error('User not found');
-      }
-      localStorage.setItem('user', JSON.stringify(loggedInUser));
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
+      setToken(access);
+
+      // 2. Get user info (by email)
+      const userRes = await axios.get<User[]>(`${API_BASE_URL}/users/`, {
+        headers: { Authorization: `Bearer ${access}` },
+      });
+      const user = userRes.data.find((u) => u.email === email);
+      if (user) {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+      } else {
+        throw new Error('User not found.');
+      }
     } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
+      throw new Error('Invalid email or password.');
     }
   };
 
   const register = async (username: string, email: string, password: string) => {
     try {
-      await axios.post(`${API_BASE_URL}/register/`, {
+      await axios.post(`${API_BASE_URL}/users/register/`, {
         username,
         email,
         password,
       });
     } catch (error) {
-      console.error('Registration failed:', error);
-      throw error;
+      throw new Error('Registration failed.');
     }
   };
 

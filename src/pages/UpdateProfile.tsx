@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../apiConfigure';
+import { useAuth } from '../context/AuthContext';
 import '../styles/UpdateProfile.css';
 
 const UpdateProfile = ({ profile, onClose }: { profile: any; onClose: () => void }) => {
+  const { token } = useAuth();
   const [form, setForm] = useState({
     firstname: profile.firstname || '',
     lastname: profile.lastname || '',
@@ -41,7 +43,9 @@ const UpdateProfile = ({ profile, onClose }: { profile: any; onClose: () => void
     }
     try {
       let data: FormData | typeof form;
-      let headers = {};
+      let headers: any = token
+        ? { Authorization: `Bearer ${token}` }
+        : {};
       if (avatarFile) {
         const formData = new FormData();
         Object.entries(form).forEach(([key, value]) => {
@@ -49,9 +53,10 @@ const UpdateProfile = ({ profile, onClose }: { profile: any; onClose: () => void
         });
         formData.append('avatar', avatarFile);
         data = formData;
-        headers = { 'Content-Type': 'multipart/form-data' };
+        headers['Content-Type'] = 'multipart/form-data';
       } else {
         data = form;
+        headers['Content-Type'] = 'application/json';
       }
       await axios.patch(
         `${API_BASE_URL}/users/${profile.id}/`,

@@ -7,6 +7,7 @@ import PostCard from '../components/posts/PostCard';
 import CommentSection from '../components/posts/CommentSection';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Posts.css';
+import { t } from 'framer-motion/dist/types.d-CQt5spQA';
 
 const Posts: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,6 +22,14 @@ const Posts: React.FC = () => {
   const handleCreatePost = async (content: string, image?: File) => {
     // Dispatch your create post action here
     setIsCreateOpen(false);
+  };
+
+  const toggleLike = (id: number) => {
+    // You would typically dispatch a like/unlike action here.
+    // Example: dispatch(likePost(id));
+    // For now, just a placeholder.
+    // You may need to import and implement likePost in your postsSlice.
+    console.log(`Toggling like for post with id: ${id}`);
   };
 
   return (
@@ -45,11 +54,15 @@ const Posts: React.FC = () => {
         {posts.map((post) => (
           <div key={post.id}>
             <PostCard
-              post={post}
-              onDelete={() => dispatch(deletePost(post.id))}
-              onLike={() => {/* Like logic */}}
-              onUnlike={() => {/* Unlike logic */}}
-              onComment={() => {/* Comment logic */}}
+              post={{
+                ...post,
+                author: typeof post.author === 'object' && post.author !== null
+                  ? post.author
+                  : { username: String(post.author ?? 'Unknown') },
+                created_at: post.created_at ?? ''
+              }}
+              liked={post.liked}
+              onLike={() => {toggleLike(post.id)}}
             />
             <CommentSection postId={post.id} />
           </div>

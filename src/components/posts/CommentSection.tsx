@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import '../../styles/CommentSection.css';
+import { useAuth } from '../../context/AuthContext';
+import API_BASE_URL from '../../apiConfigure';
 
 interface Comment {
   id: number;
-  author_name: string;
+  author: { username: string };
   content: string;
   created_at: string;
+  like_count: number;
   liked: boolean;
-  likes: number;
 }
 
 interface CommentSectionProps {
@@ -15,50 +16,75 @@ interface CommentSectionProps {
 }
 
 const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
+  const { token } = useAuth();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Fetch comments
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/posts/comments/?post=${postId}`)
+    fetch(`${API_BASE_URL}/posts/comments/?post=${postId}`)
       .then(res => res.json())
       .then(data => setComments(data))
       .finally(() => setLoading(false));
   }, [postId]);
 
-  // Add comment
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
     setLoading(true);
-    const res = await fetch('/api/posts/comments/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ post: postId, content: newComment }),
-    });
-    if (res.ok) {
-      const comment = await res.json();
-      setComments([comment, ...comments]);
-      setNewComment('');
+    try {
+      const res = await fetch(`${API_BASE_URL}/posts/comments/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ post: postId, content: newComment }),
+      });
+      if (res.ok) {
+        const comment = await res.json();
+        setComments([comment, ...comments]);
+        setNewComment('');
+      } else {
+        const errorData = await res.json();
+        alert(
+          typeof errorData === 'string'
+            ? errorData
+            : JSON.stringify(errorData)
+        );
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  // Like/unlike comment
-  const handleLike = async (commentId: number, liked: boolean) => {
+  const handleLike = async (id: number, liked: boolean) => {
+    if (!token) return;
     setLoading(true);
-    await fetch(`/api/posts/comments/${commentId}/${liked ? 'unlike' : 'like'}/`, {
-      method: liked ? 'DELETE' : 'POST',
-    });
-    setComments(comments =>
-      comments.map(c =>
-        c.id === commentId
-          ? { ...c, liked: !liked, likes: liked ? c.likes - 1 : c.likes + 1 }
-          : c
-      )
-    );
-    setLoading(false);
+    try {
+      const res = await fetch(`${API_BASE_URL}/posts/comments/${id}/${liked ? 'unlike' : 'like'}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.ok) {
+        setComments(prevComments =>
+          prevComments.map(comment =>
+            comment.id === id
+              ? {
+                  ...comment,
+                  liked: !liked,
+                  like_count: comment.like_count + (liked ? -1 : 1),
+                }
+              : comment
+          )
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -79,7 +105,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
       <div className="comment-section-list">
         {comments.map(comment => (
           <div className="comment-card" key={comment.id}>
-            <div className="comment-author">{comment.author_name}</div>
+            <div className="comment-author">{comment.author.username}</div>
             <div className="comment-content">{comment.content}</div>
             <div className="comment-footer">
               <span className="comment-date">{new Date(comment.created_at).toLocaleString()}</span>
@@ -88,7 +114,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
                 onClick={() => handleLike(comment.id, comment.liked)}
                 disabled={loading}
               >
-                {comment.liked ? 'Unlike' : 'Like'} ({comment.likes})
+                {comment.liked ? 'Unlike' : 'Like'} ({comment.like_count})
               </button>
             </div>
           </div>

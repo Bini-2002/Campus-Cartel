@@ -1,73 +1,43 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import type { AppDispatch } from '../../store/store';
-import { deletePost, updatePost, toggleLike } from '../../features/posts/postsSlice';
-import '../../styles/Posts.css';
+import React from 'react';
 
 interface PostCardProps {
-  post: any;
-  onDelete: () => void;
-  onLike: () => void;
-  onUnlike: () => void;
-  onComment: () => void;
+  post: {
+    id: number;
+    author: { username: string };
+    content: string;
+    image?: string;
+    created_at: string;
+    like_count: number;
+    comment_count: number;
+    // ...other fields
+  };
+  onLike: (postId: number, liked: boolean) => void;
+  liked: boolean;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post, onDelete, onLike, onUnlike, onComment }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editContent, setEditContent] = useState(post.content);
-  const dispatch = useDispatch<AppDispatch>();
-
-  // Only allow editing if the current user is the author
-  const currentUserId = Number(localStorage.getItem('user_id')); // Adjust this to your auth logic
-
-  const handleUpdate = () => {
-    dispatch(updatePost({ id: post.id, content: editContent }));
-    setIsEditing(false);
-  };
-
+const PostCard: React.FC<PostCardProps> = ({ post, onLike, liked }) => {
   return (
     <div className="post-card">
-      <div className="post-card-header">
-        <span className="post-author">{post.author_name}</span>
+      <div className="post-header">
+        <span className="post-author">{post.author.username}</span>
         <span className="post-date">{new Date(post.created_at).toLocaleString()}</span>
       </div>
-      {isEditing ? (
-        <div>
-          <textarea
-            className="post-edit-textarea"
-            value={editContent}
-            onChange={e => setEditContent(e.target.value)}
-          />
-          <button className="btn-primary" onClick={handleUpdate}>Save</button>
-          <button className="btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
-        </div>
-      ) : (
-        <div className="post-content">{post.content}</div>
-      )}
+      <div className="post-content">{post.content}</div>
       {post.image && (
-        <img src={post.image} alt="Post" className="post-image" />
+        <div className="post-image">
+          <img src={post.image} alt="Post" />
+        </div>
       )}
-      <div className="post-card-actions">
+      <div className="post-actions">
         <button
-          className={`post-like-btn${post.liked ? ' liked' : ''}`}
-          onClick={post.liked ? onUnlike : onLike}
+          className={`post-like-btn${liked ? ' liked' : ''}`}
+          onClick={() => onLike(post.id, liked)}
         >
-          {post.liked ? 'Unlike' : 'Like'} ({post.like_count})
+          {liked ? 'Unlike' : 'Like'} ({post.like_count})
         </button>
-        <button className="post-comment-btn" onClick={onComment}>
-          Comment ({post.comment_count})
-        </button>
-        {/* Only show edit/delete for the post author */}
-        {post.author === currentUserId && (
-          <>
-            <button className="post-edit-btn" onClick={() => setIsEditing(true)}>
-              Edit
-            </button>
-            <button className="post-delete-btn" onClick={onDelete}>
-              Delete
-            </button>
-          </>
-        )}
+        <span className="post-comment-count">
+          💬 {post.comment_count}
+        </span>
       </div>
     </div>
   );

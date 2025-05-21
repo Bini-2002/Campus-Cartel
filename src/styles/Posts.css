@@ -1,0 +1,36 @@
+.posts-page-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+.posts-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #2563eb;
+  text-align: center;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.no-posts-message {
+  color: #888;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  color: #d93025;
+  text-align: center;
+  margin: 1rem 0;
+}

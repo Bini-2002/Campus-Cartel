@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Dialog } from '@headlessui/react';
 import { PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { motion } from 'framer-motion';
-import '../styles/CreatePost.css'; // Adjust the path as needed
+import '../../styles/CreatePost.css'; // Adjust the path as needed
 
 interface CreatePostProps {
   isOpen: boolean;

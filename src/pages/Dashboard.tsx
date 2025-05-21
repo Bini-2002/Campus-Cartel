@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/dashboard/Sidebar';
 import Header from '../components/dashboard/Header';
-import Home from './Home';
-import Groups from './Groups';
-import Profile from './Profile';
+import Posts from './Posts';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css';
 
 const Dashboard = () => {
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('posts');
+  const navigate = useNavigate();
 
   const renderSection = () => {
     switch (activeSection) {
-      case 'home':
-        return <Home />;
-      case 'groups':
-        return <Groups />;
-      case 'profile':
-        return <Profile />;
+      case 'posts':
+        return <Posts />;
       default:
-        return <Home />;
+        return <Posts />;
     }
   };
 
@@ -40,6 +36,22 @@ const Dashboard = () => {
             {renderSection()}
           </motion.div>
         </AnimatePresence>
+        {/* Only this floating button remains */}
+        <button
+          className="btn-primary"
+          style={{
+            position: 'fixed',
+            right: '2rem',
+            bottom: '2rem',
+            padding: '0.5rem 1.25rem',
+            fontSize: '1rem',
+            borderRadius: '999px',
+            zIndex: 100
+          }}
+          onClick={() => navigate('/create-post')}
+        >
+          Create Post
+        </button>
       </div>
     </div>
   );

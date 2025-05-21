@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import '../../styles/Sidebar.css';
 
 interface SidebarProps {
@@ -8,6 +10,8 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ setActiveSection, activeSection }) => {
+  const { user } = useAuth();
+
   return (
     <aside className="dashboard-sidebar">
       <div className="dashboard-sidebar-header">
@@ -28,13 +32,12 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveSection, activeSection }) =>
         >
           Groups
         </motion.button>
-        <motion.button
-          onClick={() => setActiveSection('profile')}
+        <Link
+          to={`/profile/${user?.id}`}
           className={`sidebar-btn${activeSection === 'profile' ? ' active' : ''}`}
-          whileHover={{ scale: 1.05 }}
         >
           Profile
-        </motion.button>
+        </Link>
       </nav>
     </aside>
   );

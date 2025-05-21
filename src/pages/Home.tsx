@@ -39,7 +39,9 @@ const Home: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <h1 className="home-title">Campus Feed</h1>
+      <div className="home-header">
+        <h1 className="home-title">Campus Feed</h1>
+      </div>
       {posts.length === 0 && !isLoading && (
         <p className="no-posts-message">No posts yet. Be the first to share something!</p>
       )}

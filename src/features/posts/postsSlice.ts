@@ -8,6 +8,10 @@ export interface Post {
   like_count: number;
   comment_count: number;
   liked: boolean;
+  author?: number;
+  author_name?: string;
+  created_at?: string;
+  image?: string;
 }
 
 interface PostsState {
@@ -22,11 +26,20 @@ const initialState: PostsState = {
   error: null,
 };
 
-// Define the fetchPosts action
+// Fetch posts
 export const fetchPosts = createAsyncThunk<Post[]>('posts/fetchPosts', async () => {
   const response = await axios.get<Post[]>(`${API_BASE_URL}/posts/`);
   return response.data;
 });
+
+// Update post
+export const updatePost = createAsyncThunk<Post, { id: number; content: string }>(
+  'posts/updatePost',
+  async ({ id, content }) => {
+    const response = await axios.patch<Post>(`${API_BASE_URL}/posts/${id}/`, { content });
+    return response.data;
+  }
+);
 
 const postsSlice = createSlice({
   name: 'posts',
@@ -56,6 +69,12 @@ const postsSlice = createSlice({
       .addCase(fetchPosts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to fetch posts';
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        const idx = state.items.findIndex((p) => p.id === action.payload.id);
+        if (idx !== -1) {
+          state.items[idx] = { ...state.items[idx], ...action.payload };
+        }
       });
   },
 });

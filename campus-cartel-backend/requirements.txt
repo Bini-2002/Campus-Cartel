@@ -1,1 +1,0 @@
-Absolutely! I'm here to help you build a backend using Django and MySQL. What specific features or functionalities do you want to implement in your project? Do you have any particular requirements or questions to get started?
